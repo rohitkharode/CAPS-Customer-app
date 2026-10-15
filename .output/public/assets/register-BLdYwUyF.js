@@ -1,0 +1,1 @@
+import{r as e}from"./AuthPages-o1gDSuCp.js";var t=e;export{t as component};

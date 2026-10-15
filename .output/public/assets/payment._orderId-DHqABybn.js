@@ -1,0 +1,2 @@
+const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["assets/payment._orderId-BybCM-SC.js","assets/AppProvider-vbNjUZl6.js","assets/rolldown-runtime-CbXtAM7H.js","assets/AppShell-CQti0HiN.js","assets/format-BxAQqpap.js"])))=>i.map(i=>d[i]);
+import{i as e,n as t,r as n,t as r}from"./preload-helper-BXrJBmXj.js";var i=e(`/payment/$orderId`)({head:()=>t(`Payment`,`Payment for your CAPS print order.`),component:n(()=>r(()=>import(`./payment._orderId-BybCM-SC.js`),__vite__mapDeps([0,1,2,3,4])),`component`)});export{i as t};

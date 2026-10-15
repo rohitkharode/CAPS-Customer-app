@@ -1,0 +1,1 @@
+import{n as e}from"./ProfilePages-D89wSJTW.js";var t=e;export{t as component};

@@ -1,0 +1,29 @@
+//#region node_modules/.nitro/vite/services/ssr/assets/meta-4UnJSb34.js
+function pageHead(title, description) {
+	const t = `${title} · CAPS`;
+	return { meta: [
+		{ title: t },
+		{
+			name: "description",
+			content: description
+		},
+		{
+			property: "og:title",
+			content: t
+		},
+		{
+			property: "og:description",
+			content: description
+		},
+		{
+			property: "og:type",
+			content: "website"
+		},
+		{
+			name: "twitter:card",
+			content: "summary"
+		}
+	] };
+}
+//#endregion
+export { pageHead as t };

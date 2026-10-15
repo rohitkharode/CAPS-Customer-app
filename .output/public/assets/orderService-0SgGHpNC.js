@@ -1,0 +1,1 @@
+import{o as e}from"./AppProvider-vbNjUZl6.js";import{_ as t}from"./AppShell-CQti0HiN.js";var n={list(){return[]},get(){return null},async create(){throw t(`Order creation`)},canCancel(t){return e.includes(t.status)},async cancel(){throw t(`Order cancellation`)}};export{n as t};

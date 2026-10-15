@@ -1,0 +1,36 @@
+//#region node_modules/.nitro/vite/services/ssr/assets/queue-55MSx6M_.js
+var byTime = (a, b) => a.createdAt - b.createdAt;
+function orderQueue(jobs) {
+	const printing = jobs.filter((j) => j.status === "printing");
+	const queued = jobs.filter((j) => j.status === "queued");
+	return [
+		...printing,
+		...queued.filter((j) => j.tier === "urgent").sort(byTime),
+		...queued.filter((j) => j.tier === "flexible").sort(byTime)
+	];
+}
+/** Where a NEW job of `tier` would be inserted. */
+function estimateInsertion(jobs, tier, avgMinPerJob) {
+	const ordered = orderQueue(jobs);
+	const ahead = tier === "urgent" ? ordered.filter((j) => j.status === "printing" || j.tier === "urgent").length : ordered.length;
+	return {
+		position: ahead + 1,
+		jobsAhead: ahead,
+		etaMin: (ahead + 1) * avgMinPerJob
+	};
+}
+/** SRS FR-4.1d: shop-level cap on Urgent jobs. */
+function urgentAvailable(shop) {
+	const cap = shop.urgentCap;
+	if (!cap) return { ok: true };
+	if (cap.acceptedThisHour >= cap.maxPerHour) return {
+		ok: false,
+		reason: `This shop has reached its limit of ${cap.maxPerHour} urgent jobs this hour.`
+	};
+	return {
+		ok: true,
+		remaining: cap.maxPerHour - cap.acceptedThisHour
+	};
+}
+//#endregion
+export { orderQueue as n, urgentAvailable as r, estimateInsertion as t };

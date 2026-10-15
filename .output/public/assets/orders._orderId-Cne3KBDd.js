@@ -1,0 +1,1 @@
+import{D as e}from"./AppProvider-vbNjUZl6.js";import{t}from"./orders._orderId-bfMPwxHf.js";import{t as n}from"./OrdersPages-BZQOwhw3.js";var r=e();function i(){let{orderId:e}=t.useParams();return(0,r.jsx)(n,{orderId:e},e)}export{i as component};

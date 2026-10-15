@@ -1,0 +1,54 @@
+import { c as GST_RATE } from "./AppProvider-Dey2SDbi.mjs";
+import { r as parsePageRange } from "./validation-CcsLCRjg.mjs";
+//#region node_modules/.nitro/vite/services/ssr/assets/pricing-B-v3W0xz.js
+function selectedPageCount(settings, pageCount) {
+	if (settings.pageRange?.mode === "custom") {
+		const r = parsePageRange(settings.pageRange.value, pageCount);
+		return r.ok ? r.count : 0;
+	}
+	return pageCount;
+}
+function perPageRate(shop, paper, color) {
+	const v = shop?.pricing?.perPage?.[paper]?.[color];
+	return typeof v === "number" ? v : null;
+}
+function urgentSurchargePaise(shop, subtotalPaise) {
+	const cfg = shop.urgentSurcharge;
+	if (!cfg) return 0;
+	return cfg.type === "flat" ? cfg.value : Math.round(subtotalPaise * cfg.value / 100);
+}
+function calculatePrice({ settings, pageCount, shop, tier = "flexible", gstRate = GST_RATE }) {
+	const pages = selectedPageCount(settings, pageCount);
+	const copies = Number(settings.copies) || 0;
+	const rate = perPageRate(shop, settings.paper, settings.color) ?? 0;
+	const printedPages = pages * copies;
+	const printPaise = printedPages * rate;
+	const bindingUnit = shop.pricing.binding[settings.binding] ?? 0;
+	const bindingPaise = settings.binding === "none" ? 0 : bindingUnit * copies;
+	const subtotalPaise = printPaise + bindingPaise;
+	const urgentPaise = tier === "urgent" ? urgentSurchargePaise(shop, subtotalPaise) : 0;
+	const taxable = subtotalPaise + urgentPaise;
+	const gstPaise = Math.round(taxable * gstRate);
+	const totalPaise = taxable + gstPaise;
+	return {
+		pages,
+		copies,
+		printedPages,
+		ratePaise: rate,
+		printPaise,
+		bindingUnitPaise: settings.binding === "none" ? 0 : bindingUnit,
+		bindingPaise,
+		subtotalPaise,
+		urgentPaise,
+		gstRate,
+		gstPaise,
+		totalPaise
+	};
+}
+function describeSurcharge(shop) {
+	const c = shop.urgentSurcharge;
+	if (!c) return "No surcharge";
+	return c.type === "flat" ? `+₹${(c.value / 100).toFixed(2)} flat` : `+${c.value}% of print & binding`;
+}
+//#endregion
+export { describeSurcharge as n, perPageRate as r, calculatePrice as t };
